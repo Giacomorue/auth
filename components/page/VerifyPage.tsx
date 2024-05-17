@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import CardWrapper from "../auth-wrapper";
 import VerifyEmail from "../auth/verify-email";
+import Spinner from "../spinner";
 
 function VerifyPage() {
   return (
@@ -9,7 +10,9 @@ function VerifyPage() {
         title="Verify Email"
         subtitle="After register you need to verify your email"
       >
-        <VerifyEmail />
+        <Suspense fallback={<Spinner />}>
+          <VerifyEmail />
+        </Suspense>
       </CardWrapper>
     </main>
   );

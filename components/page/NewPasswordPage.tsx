@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import CardWrapper from "../auth-wrapper";
 import LoginForm from "../auth/login-form";
 import SocialButtons from "../auth/social-buttons";
 import { Separator } from "../ui/separator";
 import ResetPasswordForm from "../auth/reset-password-form";
 import NewPasswordForm from "../auth/new-password-form";
+import Spinner from "../spinner";
 
 function NewPasswordPage() {
   return (
@@ -15,9 +16,9 @@ function NewPasswordPage() {
         backButtonLink="/auth/login"
         backButtonText="Do you want to retun to login?"
       >
-        <div>
+        <Suspense fallback={<Spinner />}>
           <NewPasswordForm />
-        </div>
+        </Suspense>
       </CardWrapper>
     </div>
   );
