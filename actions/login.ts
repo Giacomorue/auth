@@ -12,6 +12,7 @@ import { db } from "@/prismadb";
 import { SendTwoFA } from "./emailSender";
 import bcryptjs from "bcryptjs";
 import { GetVerifyTokenByUserId } from "@/data/tokens";
+import { RequestVerifyEmailLink } from "./requestVerifyEmailLink";
 
 export const Login = async (
   data: z.infer<typeof FormSchemaLogin>,
@@ -32,7 +33,8 @@ export const Login = async (
   }
 
   if (!user.emailVerified) {
-    return { error: "Email not verified!" };
+    await RequestVerifyEmailLink(user.email)
+    return { error: "Email not verified! We send a new email now!" };
   }
 
   const isCorrectPassword = await bcryptjs.compare(password, user.password);

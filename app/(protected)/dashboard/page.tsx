@@ -1,23 +1,8 @@
-import { auth, signOut } from "@/auth";
+import DashboardPage from "@/components/page/DashboardPage";
 
-async function ProtectedPage() {
-  const session = await auth();
-
+function ProtectedPage() {
   return (
-    <div>
-      {JSON.stringify(session)}
-      <form
-        action={async () => {
-          "use server";
-
-          await signOut({
-            redirectTo: "/auth/login",
-          });
-        }}
-      >
-        <button type="submit">Sign out</button>
-      </form>
-    </div>
+    <DashboardPage />
   );
 }
 

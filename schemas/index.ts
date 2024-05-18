@@ -39,3 +39,17 @@ export const FormSchemaNewPassword = z.object({
     message: "Insert a valid password with min 6 characters",
   }),
 });
+
+export const FormSchemaName = z.object({
+  name: z.string().min(3, {
+    message: "Insert a valid name",
+  }),
+});
+
+export const FormShcemaTwoFactor = z.object({
+  isTWoFactor: z.string(),
+});
+
+export const FormSchemaRole = z.object({
+  role: z.string(),
+});

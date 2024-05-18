@@ -11,6 +11,7 @@ declare module "next-auth" {
     user: {
       role: RoleDb;
       isTwoFactor: boolean;
+      isCredentials: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -60,14 +61,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token }) {
-      console.log({ token });
-
       if (token.sub) {
-        const user = await GetUserById(token.sub);
-        console.log({ user });
 
+        const user = await GetUserById(token.sub);
+
+        token.isCredentials = !!user?.password;
         token.role = user?.role;
         token.isTwoFactor = user?.isTwoFactor;
+        token.name = user?.name;
       }
 
       return token;
@@ -81,9 +82,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.role = token.role as RoleDb;
       }
 
-      session.user.isTwoFactor = !!token.isTwoFactor || (false as boolean);
-
-      console.log({ session });
+      if (session.user) {
+        console.log("TOKEN: ", {token});
+        session.user.name = token.name;
+        console.log("SESSION: ", {session});
+        session.user.isTwoFactor = !!token.isTwoFactor || (false as boolean);
+        session.user.isCredentials =
+          !!token.isCredentials || (false as boolean);
+      }
       return session;
     },
   },

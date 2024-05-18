@@ -88,7 +88,7 @@ function LoginForm() {
             setError(undefined);
             setSuccess("Login correct!");
             setDisabledInput(true);
-            router.push("/dashboard");
+            window.location.assign("/dashboard");
             stop();
             return;
           }
